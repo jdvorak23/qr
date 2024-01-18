@@ -24,9 +24,9 @@ const defaultCoding = 'UTF-8';
  * width a height jsou z parametrů, pokud chybí v parametru bere se defaultní
  * @param int $width
  * @param int $height
- * @return void
+ * @return never
  */
-function showErrorImage(int $width, int $height)
+function showErrorImage(int $width, int $height): never
 {
 	$whiteImage = imagecreatetruecolor($width, $height);
 	$white = imagecolorallocate($whiteImage, 255, 255, 255);
@@ -43,9 +43,11 @@ function showErrorImage(int $width, int $height)
  * @param int $height
  * @param ErrorCorrectionLevel $correctionLevel Zkusit s "low" když jsou $data příliš velká pro vyšší korekci
  * @param int $margin Margin okolo obrázku, snížit na 0 pokud jsou moc velká $data
- * @return void
+ * @param string $coding
+ * @return never
+ * @throws Exception
  */
-function showQrImage(string $data, int $width, int $height, ErrorCorrectionLevel $correctionLevel, int $margin, string $coding)
+function showQrImage(string $data, int $width, int $height, ErrorCorrectionLevel $correctionLevel, int $margin, string $coding): never
 {
 	// Knihovna kreslí pouze čtvercové qr kódy, vezmeme menší z width a height a odečteme margin
 	$size = min($width, $height) - 2 * $margin;
@@ -55,7 +57,7 @@ function showQrImage(string $data, int $width, int $height, ErrorCorrectionLevel
 		->writerOptions([])
 		->data($data)
 		->encoding(new Encoding($coding)) //'ISO-8859-1' - lepší kompatibilita ale nezvládá české znaky apod.
-		->errorCorrectionLevel($correctionLevel) // Metodou pokus / omyl aby byly co nejpodobnější googlu
+		->errorCorrectionLevel($correctionLevel)
 		->size($size)
 		->margin($margin)
 		->roundBlockSizeMode(RoundBlockSizeMode::Margin)
@@ -74,6 +76,7 @@ function showQrImage(string $data, int $width, int $height, ErrorCorrectionLevel
 		header('Content-Type: image/png');
 		imagepng($sizedImage);
 	}
+	exit;
 }
 
 // Získání parametrů
