@@ -4,8 +4,7 @@
 	"type": "project",
 	"license": ["MIT"],
 	"require": {
-		"php": ">=8.2",
-		"chillerlan/php-qrcode": "^5.0",
+		"php": ">=8.1",
 		"ext-gd": "*",
 		"ext-imagick": "*",
 		"ext-fileinfo": "*",
