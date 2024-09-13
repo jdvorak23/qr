@@ -6,13 +6,13 @@ use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\RoundBlockSizeMode;
 use Endroid\QrCode\Writer\PngWriter;
 
-ini_set('display_startup_errors', 1);
-ini_set('display_errors', 1);
-error_reporting(-1);
-
 require_once '../vendor/autoload.php';
 const defaultWidth = 150;
 const defaultHeight = 150;
+
+const maxWidth = 800;
+
+const maxHeight = 800;
 const defaultMargin = 4;
 
 const defaultCorrectionLevel = ErrorCorrectionLevel::Low;
@@ -102,6 +102,8 @@ if(isset($params['chs'])) {
 	$width = defaultWidth;
 	$height = defaultHeight;
 }
+$width = min($width, maxWidth);
+$height = min($height, maxHeight);
 
 // Parametr 'chl' jsou data, která mají být v obrázku, urlencoded
 // Pokud parametr chybí, zobrazíme defaultní error image
